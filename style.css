@@ -63,6 +63,7 @@ main{
     padding: 25px 15px;
     width: 85%;
     max-width: var(--mv);
+    box-shadow: 8px 8px 14px -2px #000000;
 }
 form{
     width: 100%;
@@ -146,6 +147,7 @@ form>button:hover{
 .recipeDescription{
     background-color: white;
     width: 100%;
+    max-width: 1250px;
 }
 .recipeDescription i{
     font-size: xx-large;
@@ -179,13 +181,15 @@ form>button:hover{
     font-size: 142%;
     margin: auto;
 }
-.ingrediantes{
+.ingredients{
     padding: 2rem;
-    line-height:2
+    line-height:2;
+    padding: 12px;
 }
 #ingredientsList{
     font-size: 24px;
     line-height: 2;
+    padding: 0 3rem;
 }
 
 @media only screen and (max-width:530px){
@@ -284,3 +288,76 @@ form>button:hover{
         font-size: 18px;
     }
 }
+/* From Uiverse.io by vinodjangid07 */ 
+.loader {
+        display: flex;
+        justify-content: center;
+        margin-top: 100px;
+  }
+  .loaderMiniContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    width: 130px;
+    height: fit-content;
+  }
+  .barContainer {
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 10px;
+    background-position: left;
+  }
+  .bar {
+    width: 100%;
+    height: 8px;
+    background: linear-gradient(
+      to right,
+      rgb(30, 18, 47),
+      rgb(217, 190, 255),
+      rgb(16, 5, 30)
+    );
+    background-size: 200% 100%;
+    border-radius: 10px;
+    animation: bar ease-in-out 3s infinite alternate-reverse;
+  }
+  @keyframes bar {
+    0% {
+      background-position: left;
+    }
+    100% {
+      background-position: right;
+    }
+  }
+  .bar2 {
+    width: 50%;
+  }
+  .svgIcon {
+    position: absolute;
+    left: -25px;
+    margin-top: 18px;
+    z-index: 2;
+    width: 70%;
+    animation: search ease-in-out 3s infinite alternate-reverse;
+  }
+  @keyframes search {
+    0% {
+      transform: translateX(0%) rotate(70deg);
+    }
+  
+    100% {
+      transform: translateX(100px) rotate(10deg);
+    }
+  }
+  .svgIcon circle,
+  line {
+    stroke: #3b2509;
+  }
+  .svgIcon circle {
+    fill: rgba(98, 65, 142, 0.238);
+  }
+  

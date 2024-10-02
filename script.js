@@ -1,37 +1,48 @@
 const form = document.querySelector('form');
 const inputField = form.elements[0];
-const submitBtn = form.elements[1];
 const recipeContainer = document.querySelector('.recipeContainer');
-const card = document.querySelector('.card');
-const fetchRecipe =async (url)=>{
-    const fetching =await fetch(`${url}`);
-    const response =await fetching.json();
-    recipeContainer.innerHTML='';
-    for (let i = 0; i < 5; i++) {
-        recipe = response.meals[i];
-        console.log(recipe.strMeal);
-        allRecipies(recipe)
-        
+// fetchRecipe(`www.themealdb.com/api/json/v1/1/categories.php`) catagori based 
+// Fetching recipes from the API
+let xyz;
+const fetchRecipe = async (url) => {
+    try {
+        const fetching = await fetch(url);
+        const response = await fetching.json();
+
+        // Clear container before displaying new recipes
+        recipeContainer.innerHTML = '';
+                    if (response.meals) {
+                        // Iterate over each recipe
+                        response.meals.forEach(recipe => {
+                            allRecipies(recipe);
+                        });
+                    } else {
+                        recipeContainer.innerHTML = `<p style="font-size:xx-large;">No recipes found for "${xyz}". Try another search!</p>`;
+                    }
+    } catch (error) {
+        console.error("Error fetching recipes: ", error);
+        recipeContainer.innerHTML = `<p style="font-size:xx-large;">Something went wrong. Please try again!</p>`;
     }
-}
+};
+
+// Displaying all recipes
 function allRecipies(recipe) {
-    recipeContainer.innerHTML+=`
-        <div class="card" onclick="details()">
+    recipeContainer.innerHTML += `
+        <div class="card" onclick='details(${JSON.stringify(recipe)})'>     
             <img src="${recipe.strMealThumb}" alt="Avatar" >
-                <div class="container">
-                    <h4><b>${recipe.strMeal}</b></h4> 
-                    <p>${recipe.strArea}</p> 
-                    
-                </div>
+            <div class="container">
+                <h4><b>${recipe.strMeal}</b></h4> 
+                <p>${recipe.strArea}</p> 
+            </div>
         </div> 
-    `
+    `;
 }
 
-function details() {
+// Displaying detailed view of a recipe
+function details(recipe) {
     recipeContainer.innerHTML = `
         <div class="recipeDescription">
-        <i class="fas fa-times" onclick="allRecipies(recipe)"></i>
-
+            <i class="fas fa-times" id="closeButton"></i>
             <div class="imgAndTitle">
                 <img src="${recipe.strMealThumb}" alt="Avatar">
                 <hr>
@@ -40,7 +51,7 @@ function details() {
                     <p>${recipe.strArea}</p>
                 </div>
             </div>
-            <div class="ingrediantes">
+            <div class="ingredients">
                 <h2>Ingredients:~</h2>
                 <ul id="ingredientsList">
                     <!-- Ingredients will be appended here -->
@@ -48,33 +59,83 @@ function details() {
             </div>
         </div>
     `;
-    let ul =document.querySelector('#ingredientsList');
 
-    for (let i = 1; i <= 21; i++) {
+    // Appending ingredients to the list
+    let ul = document.querySelector('#ingredientsList');
+    for (let i = 1; i <= 20; i++) {
         let ingredient = recipe[`strIngredient${i}`];
         let measure = recipe[`strMeasure${i}`];
-
-        if(ingredient.trim() && measure.trim()){
+        if (ingredient.trim()) {
             let li = document.createElement('li');
-            li.textContent =`${ingredient.trim()} (${measure})`;
-            ul.appendChild(li)
+            li.textContent = `${ingredient} ${(measure) ? (measure) : ''}`.trim();
+            ul.appendChild(li);
         }
-        
     }
+
+    // Add event listener to close button after it's rendered
+    const closeButton = document.getElementById('closeButton');
+    closeButton.addEventListener('click', () => {
+        // Fetch all recipes again when the close button is clicked
+        showLoader(recipeContainer);
+        setTimeout(() => {
+            fetchRecipe(`https://www.themealdb.com/api/json/v1/1/search.php?s=${xyz}`);
+        }, 300);
+    });
 }
 
-form.addEventListener('submit',(e)=>{
+// Form submission to search for recipes
+form.addEventListener('submit', (e) => {
     e.preventDefault();
-    if(!inputField.value){
-        alert(`Search your Recipe !`)
+    if (!inputField.value) {
+        alert(`Please enter a recipe name!`);
+    } else {
+        xyz='';
+        const mealRecipe = inputField.value.trim();
+        xyz = mealRecipe;
+        inputField.value = '';
+        showLoader(recipeContainer);
+        setTimeout(() => {
+            fetchRecipe(`https://www.themealdb.com/api/json/v1/1/search.php?s=${mealRecipe}`);
+        }, 1000);
     }
-    else{
-        const mealRecipe= inputField.value;
-        inputField.value= '';
-        recipeContainer.innerHTML=` loading recipe ....`
-        fetchRecipe(`https://www.themealdb.com/api/json/v1/1/search.php?s=${mealRecipe}`);
-    }
-})
+});
 
-
+function showLoader(container) {
+    const loaderHTML = `
+        <div class="loader">
+            <div class="loaderMiniContainer">
+                <div class="barContainer">
+                    <span class="bar"></span>
+                    <span class="bar bar2"></span>
+                </div>
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 101 114"
+                    class="svgIcon"
+                >
+                    <circle
+                        stroke-width="7"
+                        stroke="black"
+                        transform="rotate(36.0692 46.1726 46.1727)"
+                        r="29.5497"
+                        cy="46.1727"
+                        cx="46.1726"
+                    ></circle>
+                    <line
+                        stroke-width="7"
+                        stroke="black"
+                        y2="111.784"
+                        x2="97.7088"
+                        y1="67.7837"
+                        x1="61.7089"
+                    ></line>
+                </svg>
+            </div>
+        </div>
+    `;
+    
+    // Inject the loader HTML into the specified container
+    container.innerHTML = loaderHTML;
+}
 
