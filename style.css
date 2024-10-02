@@ -120,6 +120,12 @@ form>button:hover{
     background-color: white;
     border-radius: 6px;
     box-shadow: 8px 12px 14px -2px #000000;
+    transition: transform 0.3s ease; /* Smooth in and out transition */
+    /* transform: scale(1); */
+}
+.card:hover{
+    transition: transform 0.3s;
+    transform: scale(1.04);
 }
 .card img{
     width: 100%;
@@ -135,6 +141,53 @@ form>button:hover{
 .container p{
     font-size: x-large;
 }
+
+/* details */
+.recipeDescription{
+    background-color: white;
+    width: 100%;
+}
+.recipeDescription i{
+    font-size: xx-large;
+    color: red;
+    position: absolute;
+    right: 80px;
+    top: 210px;
+    transition: transform .5s ease;
+}
+.imgAndTitle{
+    height: 40vh;
+    padding: 2rem;
+    background: burlywood;
+    display: flex;
+}
+.imgAndTitle img{
+    width:50%;
+    max-width: 400px;
+    object-fit: fill;
+    border-radius: 8px;
+
+    box-shadow: 8px 12px 14px -2px #000000;
+}
+.imgAndTitle hr{
+    height: 100%;
+    border: 1px solid;
+    margin: 0 16px;
+}
+.imgAndTitle .title{
+    width: 50%;
+    font-size: 142%;
+    margin: auto;
+}
+.ingrediantes{
+    padding: 2rem;
+    line-height:2
+}
+#ingredientsList{
+    font-size: 24px;
+    line-height: 2;
+}
+
 @media only screen and (max-width:530px){
     .small{
         display: block;
@@ -189,5 +242,45 @@ form>button:hover{
     }
     .container p{
         font-size: large;
+    }
+    /* .ingrediantes{
+        padding: .4rem  ;
+    } */
+    .recipeDescription{
+        background-color: white;
+        width: 100%;
+    }
+    .recipeDescription i{
+        right: 26px;
+        top: 180px;
+    }
+    .imgAndTitle{
+        height: auto;
+        padding: 0.2rem;
+        /* background: burlywood; */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .imgAndTitle img{
+        width:70%;
+        height: 320px;
+        object-fit: cover;
+        margin: 8px 0;
+    }
+    .imgAndTitle hr{
+        display: none;
+    }
+    .imgAndTitle .title{
+        padding: 12px 8px;
+        width: 80%;
+        margin: auto;
+    }
+    .ingrediantes{
+        padding: 2rem;
+        line-height:1.5
+    }
+    #ingredientsList{
+        font-size: 18px;
     }
 }
