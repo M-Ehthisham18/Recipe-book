@@ -1,0 +1,190 @@
+:root{
+    --primary-color: rgb(59 37 8);
+    --bg-color: rgb(201, 201, 201);
+    --mv:770px;
+    --text:white;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+    border: none;
+    outline: none;
+}
+body{
+    background-color: var(--bg-color);
+}
+header{
+    height: 60px;
+    background-color: var(--primary-color);
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+nav{
+    width: 100%;
+    padding: 0 10%;
+    height: 100%;
+    font-size: xx-large;
+    font-weight: 700;
+    font-family: ui-monospace;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+}
+.light{
+    font-weight: lighter;
+    font-size: smaller;
+    color: rgb(234, 233, 233);
+}
+.small{
+    display: none;
+}
+.result{
+    width: 100%;
+    max-width: var(--mv);
+    padding: 1rem 3.5rem ;
+    
+}
+
+main{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.input{
+    background-color: white;
+    margin: 12px 0;
+    border-radius: 8px;
+    padding: 25px 15px;
+    width: 85%;
+    max-width: var(--mv);
+}
+form{
+    width: 100%;
+}
+
+form>input{
+    width: 73%;
+    height: 40px;
+    font-size: x-large;
+    padding: 4px 10px;
+    border-bottom: 2px solid;
+    border-radius: 12px;
+}
+form>input:focus{
+    background-color: e7f0f3;
+}
+
+form>button{
+    height: 40px;
+    border-radius: 50px;
+    font-size: x-large;
+    padding: 4px 10px;
+    box-shadow: 3px 3px 10px 1px black;
+    font-weight: bold;
+    width: 23.5%;
+    margin-left: 6px;
+    background-color: var(--primary-color);
+    text-transform: capitalize;
+    color: var(--text);
+    font-weight: bolder;
+}
+.white-icon {
+    filter: invert(100%) brightness(200%);
+}
+form>button:hover{
+    outline: 2px solid white;
+}
+.output{
+    padding: 0 40px;
+    width: 100%;
+}
+.recipeContainer{
+    min-height: 100vh;
+    padding: 30px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 40px 20px;
+}
+.card{
+    padding: 20px;
+    height: 100%;
+    background-color: white;
+    border-radius: 6px;
+    box-shadow: 8px 12px 14px -2px #000000;
+}
+.card img{
+    width: 100%;
+    height: 450px;
+    object-fit: cover;
+}
+.container{
+    padding: 12px;
+}
+.container h4{
+    font-size: x-large;
+}
+.container p{
+    font-size: x-large;
+}
+@media only screen and (max-width:530px){
+    .small{
+        display: block;
+    }
+    .large{
+        display: none;
+    }
+    header{
+        height: 70px;
+    }
+    nav{
+        padding: 0 26px;
+        font-size: x-large;
+        font-weight: 600;
+    }
+    .input{
+        padding: 14px;
+    }
+    form>input{
+        width: 80%;
+        padding: 4px;
+        font-size: large;
+        border-radius: 8px;
+    }
+    form>button{
+        height: 40px;
+        border-radius: 50%;
+        width: 40px;
+        margin-left: 2px;
+    }
+    .output{
+        padding: 0 16px;
+    }
+    .recipeContainer{
+        padding: 14px;
+        gap: 30px 0;
+    }
+    .card{
+        width: 100%;
+        padding: 12px;
+    }
+    .card img{
+        width: 100%;
+        height: 400px;
+        object-fit: cover;
+    }
+    .container{
+        padding: 8px;
+    }
+    .container h4{
+        font-size: large;
+    }
+    .container p{
+        font-size: large;
+    }
+}
