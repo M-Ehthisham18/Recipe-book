@@ -3,7 +3,7 @@ const inputField = form.elements[0];
 const recipeContainer = document.querySelector('.recipeContainer');
 // fetchRecipe(`www.themealdb.com/api/json/v1/1/categories.php`) catagori based 
 // Fetching recipes from the API
-let xyz;
+let xyz ;
 const fetchRecipe = async (url) => {
     try {
         const fetching = await fetch(url);
