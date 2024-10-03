@@ -1,6 +1,7 @@
 const form = document.querySelector('form');
 const inputField = form.elements[0];
 const recipeContainer = document.querySelector('.recipeContainer');
+// const strInstructions = document.querySelector('#strInstructions')
 // fetchRecipe(`www.themealdb.com/api/json/v1/1/categories.php`) catagori based 
 // Fetching recipes from the API
 let xyz ;
@@ -8,7 +9,8 @@ const fetchRecipe = async (url) => {
     try {
         const fetching = await fetch(url);
         const response = await fetching.json();
-
+        // console.log(response.meals[0].strYoutube);
+        
         // Clear container before displaying new recipes
         recipeContainer.innerHTML = '';
                     if (response.meals) {
@@ -40,6 +42,11 @@ function allRecipies(recipe) {
 
 // Displaying detailed view of a recipe
 function details(recipe) {
+
+    //recipe video
+    let url=recipe.strYoutube;
+    let part = url.split('=');
+    
     recipeContainer.innerHTML = `
         <div class="recipeDescription">
             <i class="fas fa-times" id="closeButton"></i>
@@ -57,6 +64,22 @@ function details(recipe) {
                     <!-- Ingredients will be appended here -->
                 </ul>
             </div>
+            <div class="instruction" >
+                <h2> Instructions :~</h2>
+                <ul id="strInstructions">
+                <!-- Instructions will be appeded -->
+                </ul>
+            </div>
+            <h2 style="padding:5px 24px"> Learn By Watching Video : </h2>
+            <div id="youtubeVideo">
+                <iframe width="560" height="315" 
+                    src="https://www.youtube.com/embed/${part[1]}" 
+                    title="YouTube video player" 
+                    frameborder="0" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                    allowfullscreen>
+                </iframe>
+            </div>
         </div>
     `;
 
@@ -71,6 +94,19 @@ function details(recipe) {
             ul.appendChild(li);
         }
     }
+
+    // get the set of instructions as paragraph 
+    let paragraph = `${recipe.strInstructions}`;    
+    //convert into list of array using split function and apply map.
+    let steps = paragraph.split('.').map(step => step.trim()).filter(step => step.length > 0);
+    let instruction = document.querySelector('#strInstructions');
+    for (let i = 0; i < steps.length; i++) {
+        let li =document.createElement('li');
+        li.textContent = `${steps[i]}.`;
+        instruction.appendChild(li)
+    }
+    
+    
 
     // Add event listener to close button after it's rendered
     const closeButton = document.getElementById('closeButton');
