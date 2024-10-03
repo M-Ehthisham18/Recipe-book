@@ -9,7 +9,6 @@ const fetchRecipe = async (url) => {
     try {
         const fetching = await fetch(url);
         const response = await fetching.json();
-        // console.log(response.meals[0].strYoutube);
         
         // Clear container before displaying new recipes
         recipeContainer.innerHTML = '';
